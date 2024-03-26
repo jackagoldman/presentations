@@ -1,24 +1,163 @@
 ---
-title: "iale-2024"
-format: revealjs
+title: "Comparing forest recovery trajectories following wildfire in the presence and absence of spruce budworm defoliation using remotely sensed data"
+author: Jack A. Goldman^1^, Marie-Josée Fortin^2^, Patrick M.A. James^1^
+format: 
+  revealjs:
+    multiplex: true
+    footer: "jackagoldman.github.io"
+    theme: ["custom.scss"]
+    slide-number: c/t
+    incremental: true
+    title-slide-attributes:
+      data-background-image: content/qc-95-map-basic.png
+      data-background-size: 30%
+      data-background-position: left
 editor: visual
 ---
 
-## Quarto
+```{r setup}
+#| include: false
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+knitr::opts_knit$set(root.dir = '~/git/presentations/iale-2024')
 
-## Bullets
+library(nlme)
+library(ggplot2)
 
-When you click the **Render** button a document will be generated that includes:
+df <- read.csv("data/on-qc-full-dataset_v1.csv")
 
--   Content authored with markdown
--   Output from executable code
+# for interactive plots
+#library(ggiraph)
+#library(patchwork)
+#library(shadowtext)
 
-## Code
+# for color
+#ibrary(paletteer)
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+#\
+
+# for fonts
+#library(showtext)
+#font_add_google("Jost", "Jost")
+#showtext_auto()
+#theme_set(theme_minimal(base_family = "Jost"))
+
+
+```
+
+## Background
+:::: {.columns}
+
+::: {.column width="60%"}
+-   Wildfire and SBW defoliationmost widespread disturbances in the eastern boreal forest
+- SBW Affected over 9.6 mha of Eastern boreal forest in since 2006
+
+-   Boreal forests are adapted to both stand-replacing wildfire and spruce budworm defoliation
+
+-   independently, each disturbance facilitates the regeneration of boreal forest stands
+
+
+-   However due to CC. the spatial legacies of defoliated areas are being increasingly burned, with consequences for wildfire behaviour and implications for wildfire recovery
+
+:::
+
+::: {.column width="40%"}
+{{< video content/patrick_embed_video_NOSOUND.mp4 width="500" height="350" >}}
+
+:::
+
+::::
+
+## Wildfire behaviour and post-fire recovery
+
+:::: {.columns}
+
+::: {.column width="60%"}
+:::
+
+::: {.column width="40%"}
+![](content/fb-triangle.png)
+
+:::
+
+::::
+
+
+
+## Previous studies
+
+-   no definitive answers
+-   window of opportunity
+-   why?
+-   big data problem?
+
+## Our approach
+:::: {.columns}
+
+::: {.column width="60%"}
+-   quasi-experimental design (matched pairs)
+-   why did we do this? control for noise
+-   
+
+:::
+
+::: {.column width="40%"}
+![](content/qc-95-map-basic.png)
+
+:::
+
+::::
+
+
+::: {.notes}
+One of the difficulties in modelling the effect of SBW is quantifying the severity of sbw defoliation.
+Two key characteristics of SBW defoliation have been identified in the literature:
+Time since defoliation and cumulative defoliation
+Studies normally model these and individual predictors or in separate models.
+It is possible that the lack of evidence for SBW-Fire interactions is due to models ability to capture defoliation severity.
+I proposed a novel method to quantifying defoliation severity using latent composite variables in SEMs
+Latent composite variables are used to represent a property (in this case defoliation severity) that arise from the collective influence of certain predictors. 
+The error terms indicate that we do not include all the possible predictors because the condition of defoliation severity may also include unobservables. 
+:::
+
+## Research Question
+
+How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?
+
+1. How does SBW defoliation influence burn severity?
+2. How does SBW defoliation influence post-fire recovery?
+- Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?
+
+## Our data
 
 ```{r}
-1 + 1
+ggplot(df, aes(x=tsd)) + 
+  geom_histogram(color="black", fill="white")
 ```
+
+## Methods/synthetic index
+
+
+
+## Hypothesized causal network
+
+```{r dev.args = list(bg = 'transparent')}
+DiagrammeR::grViz("content/chapter3-dag.gv")
+```
+
+
+## sem
+
+```{r}
+library(piecewiseSEM)
+
+sem <-  piecewiseSEM::psem(
+  lme(rbr_median ~ spsm_dc + spsm_ffmc + spsm_dmc + spsm_bui + 
+              spsm_isi + spsm_fwi + tsd:cumltve_yrs, random = ~ 1| id_nestd, data = data)
+  
+)
+
+```
+
+
+
+## overview/significance
