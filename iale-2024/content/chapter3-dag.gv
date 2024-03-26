@@ -1,0 +1,32 @@
+// step 1 dag
+digraph "chapter3-step1-dag" {
+  bgcolor="transparent"
+	T [label="Time Since Defoliation" shape=rect ]
+	Y [label="Number of Years Defoliated" shape=rect ]
+	C [label="Defoliation Intensity" shape=doubleoctagon]
+	B [label="Burn Severity" color=red shape=rect]
+	R [label="Forest Recovery" color=red shape=ellipse]
+	DC [label = "Drought Code" shape=rect]
+	FC [label = "Fine Fuel Moisture Code" shape=rect]
+	DMC [label = "Duff Moisture Code" shape=rect]
+	
+subgraph clusterSI{
+  T -> C
+	Y -> C
+	C -> B
+	style=invis;
+}
+subgraph clusterBS{
+  rankdir="TB"
+  DC -> B;
+	FC -> B;
+	DMC -> B;
+	style=invis;
+	
+}
+subgraph clusterRecov{
+  B -> R
+  style=invis;
+}
+
+}
