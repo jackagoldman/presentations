@@ -22,11 +22,17 @@ knitr::opts_knit$set(root.dir = '~/git/presentations/iale-2024')
 
 library(nlme)
 library(ggplot2)
-
+library(tidyverse)
 df <- read.csv("data/on-qc-full-dataset_v1.csv")
 
+df <- df |> 
+  dplyr::group_by(fire_name) |> 
+  dplyr::mutate(id_nest =cur_group_id()) 
+
 # for interactive plots
-#library(ggiraph)
+library(DiagrammeR)
+library(tmap)
+library(sf)
 #library(patchwork)
 #library(shadowtext)
 
@@ -72,6 +78,12 @@ df <- read.csv("data/on-qc-full-dataset_v1.csv")
 :::: {.columns}
 
 ::: {.column width="60%"}
+
+- SBW legacies alter connectivity and amount of flammable fuels
+- Potentially altering wildfire behaviour (i.e., burn severity)
+- Wildfire behaviour directly influence post-fire recovery by..
+- Shifts in the wildfire behavior due to SBW legacies may lead to divergent post-fire recovery trajectories.
+
 :::
 
 ::: {.column width="40%"}
@@ -82,27 +94,39 @@ df <- read.csv("data/on-qc-full-dataset_v1.csv")
 ::::
 
 
+## Current understanding of SBW x Wildfire behaviour is unclear
 
-## Previous studies
-
--   no definitive answers
+-  SBW defoliation has been shown to increase wildfire behaviour (Flemind and Candau 2002; Jame et al. 2017)
+- In the west, Western SBW has been shown to decrease wildfire behaviour
+- Various other studies report no effect
 -   window of opportunity
--   why?
+-   why? 
+- one potential reason for the lack of consistency in the findings is that wildfires are noisy, and we are trying to detect a small signal (specific change in fuel), in a large and noisy system.
 -   big data problem?
+- we decided to approach this problem different and try to reduce the uncertainty and remove noise 
 
-## Our approach
+## Research Question
+
+How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?
+
+1. How does SBW defoliation influence burn severity?
+2. How does SBW defoliation influence post-fire recovery?
+- Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?
+
+
+## Experimental approach
 :::: {.columns}
 
 ::: {.column width="60%"}
--   quasi-experimental design (matched pairs)
+-   matched pairs design
 -   why did we do this? control for noise
 -   
 
 :::
 
 ::: {.column width="40%"}
-![](content/qc-95-map-basic.png)
-
+![Example of fire where half with defoliated and non-defoliated areas](content/qc-95-map-basic.png)
+ 
 :::
 
 ::::
@@ -119,24 +143,8 @@ Latent composite variables are used to represent a property (in this case defoli
 The error terms indicate that we do not include all the possible predictors because the condition of defoliation severity may also include unobservables. 
 :::
 
-## Research Question
-
-How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?
-
-1. How does SBW defoliation influence burn severity?
-2. How does SBW defoliation influence post-fire recovery?
-- Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?
-
-## Our data
-
-```{r}
-ggplot(df, aes(x=tsd)) + 
-  geom_histogram(color="black", fill="white")
-```
 
 ## Methods/synthetic index
-
-
 
 ## Hypothesized causal network
 
@@ -145,16 +153,49 @@ DiagrammeR::grViz("content/chapter3-dag.gv")
 ```
 
 
-## sem
+
+## Our data
+
+```{r}
+ggplot(df[df$defoliated == 1,], aes(tsd, fill = prov)) + 
+  geom_histogram(binwidth = 1, colour = "black", linetype = "dashed") +
+  theme_bw() + ggtitle("Frequency of Time Since Defoliation") + xlab("Time Since Defoliation") +
+  guides(fill = guide_legend(title = "Province"))
+```
+
+## Preliminary Results
 
 ```{r}
 library(piecewiseSEM)
 
-sem <-  piecewiseSEM::psem(
-  lme(rbr_median ~ spsm_dc + spsm_ffmc + spsm_dmc + spsm_bui + 
-              spsm_isi + spsm_fwi + tsd:cumltve_yrs, random = ~ 1| id_nestd, data = data)
+# create compositre
+comp_model <- lm(rbr_median ~ tsd + cumltve_yrs, data = df)
+
+beta_td <- summary(comp_model)$coefficients[2, 1]
+
+beta_years <- summary(comp_model)$coefficients[3, 1]
+
+df$composite <- beta_td * df$tsd + beta_years * df$cumltve_yrs
+
+
+# model first 5 years
+sem1 <-  piecewiseSEM::psem(
+  lme(rbr_median ~ spsm_bui + spsm_isi + composite, random = ~ 1| id_nest, data = df),
   
+  lme(slope1 ~ rbr_median + post_fire_temp + post_fire_precip, random = ~ 1| id_nest, data = df)
 )
+
+summary(sem1)
+
+
+# model second 5 years
+sem2 <-  piecewiseSEM::psem(
+  lme(rbr_median ~ spsm_bui + spsm_isi + composite, random = ~ 1| id_nest, data = df),
+  
+  lme(slope2 ~ rbr_median + post_fire_temp + post_fire_precip, random = ~ 1| id_nest, data = df)
+)
+
+summary(sem2)
 
 ```
 

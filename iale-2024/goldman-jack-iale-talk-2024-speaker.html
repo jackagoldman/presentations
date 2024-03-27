@@ -362,32 +362,46 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
 <h2>Wildfire behaviour and post-fire recovery</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-
+<ul>
+<li class="fragment">SBW legacies alter connectivity and amount of flammable fuels</li>
+<li class="fragment">Potentially altering wildfire behaviour (i.e., burn severity)</li>
+<li class="fragment">Wildfire behaviour directly influence post-fire recovery by..</li>
+<li class="fragment">Shifts in the wildfire behavior due to SBW legacies may lead to divergent post-fire recovery trajectories.</li>
+</ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="content/fb-triangle.png"></p>
 </div>
 </div>
 </section>
-<section id="previous-studies" class="slide level2">
-<h2>Previous studies</h2>
+<section id="current-understanding-of-sbw-x-wildfire-behaviour-is-unclear" class="slide level2">
+<h2>Current understanding of SBW x Wildfire behaviour is unclear</h2>
 <ul>
-<li class="fragment">no definitive answers</li>
+<li class="fragment">SBW defoliation has been shown to increase wildfire behaviour (Flemind and Candau 2002; Jame et al.&nbsp;2017)</li>
+<li class="fragment">In the west, Western SBW has been shown to decrease wildfire behaviour</li>
+<li class="fragment">Various other studies report no effect</li>
 <li class="fragment">window of opportunity</li>
 <li class="fragment">why?</li>
+<li class="fragment">one potential reason for the lack of consistency in the findings is that wildfires are noisy, and we are trying to detect a small signal (specific change in fuel), in a large and noisy system.</li>
 <li class="fragment">big data problem?</li>
+<li class="fragment">we decided to approach this problem different and try to reduce the uncertainty and remove noise</li>
 </ul>
 </section>
-<section id="our-approach" class="slide level2">
-<h2>Our approach</h2>
+<section id="quasi-experimental-approach" class="slide level2">
+<h2>Quasi-experimental approach</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li class="fragment">quasi-experimental design (matched pairs)</li>
+<li class="fragment">matched pairs design</li>
 <li class="fragment">why did we do this? control for noise</li>
-<li class="fragment">(picture of fire split in two)</li>
+<li class="fragment"></li>
 </ul>
 </div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="content/qc-95-map-basic.png"></p>
+<figcaption>Example of fire where half with defoliated and non-defoliated areas</figcaption>
+</figure>
+</div>
 </div>
 </div>
 <aside class="notes">
@@ -426,13 +440,104 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
 <h2>Hypothesized causal network</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6c8ca530a28ea4480458" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-6c8ca530a28ea4480458">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-2ba427fea4b3ce53f8bd" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2ba427fea4b3ce53f8bd">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="sem" class="slide level2">
-<h2>sem</h2>
+<section id="preliminary-results" class="slide level2">
+<h2>Preliminary Results</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |========                                                              |  11%
+  |                                                                            
+  |================                                                      |  22%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===============================                                       |  44%
+  |                                                                            
+  |=======================================                               |  56%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |======================================================                |  78%
+  |                                                                            
+  |==============================================================        |  89%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Structural Equation Model of sem 
+
+Call:
+  rbr_median ~ spsm_dc + spsm_ffmc + spsm_dmc + spsm_bui + spsm_isi + spsm_fwi + tsd:cumltve_yrs
+  slope1 ~ post_fire_temp + post_fire_precip + tsd:cumltve_yrs
+
+    AIC
+ 2406.575
+
+---
+Tests of directed separation:
+
+                       Independ.Claim Test.Type DF Crit.Value P.Value    
+               slope1 ~ spsm_dc + ...      coef 62    -0.5488  0.5851    
+             slope1 ~ spsm_ffmc + ...      coef 62     1.0119  0.3155    
+              slope1 ~ spsm_dmc + ...      coef 62     0.8491  0.3991    
+              slope1 ~ spsm_bui + ...      coef 62     1.1067  0.2727    
+              slope1 ~ spsm_isi + ...      coef 62    -0.4869  0.6280    
+              slope1 ~ spsm_fwi + ...      coef 62     1.2404  0.2195    
+    rbr_median ~ post_fire_temp + ...      coef 62    -1.0215  0.3110    
+  rbr_median ~ post_fire_precip + ...      coef 62     1.5145  0.1350    
+            slope1 ~ rbr_median + ...      coef 60     5.1491  0.0000 ***
+
+--
+Global goodness-of-fit:
+
+Chi-Squared = 50.997 with P-value = 0 and on 9 degrees of freedom
+Fisher's C = 43.516 with P-value = 0.001 and on 18 degrees of freedom
+
+---
+Coefficients:
+
+    Response        Predictor  Estimate Std.Error DF Crit.Value P.Value
+  rbr_median          spsm_dc    0.4971    0.7930 57     0.6268  0.5333
+  rbr_median        spsm_ffmc  -83.0042   36.7099 57    -2.2611  0.0276
+  rbr_median         spsm_dmc -302.2397  108.0545 57    -2.7971  0.0070
+  rbr_median         spsm_bui  144.0881  151.5818 57     0.9506  0.3458
+  rbr_median         spsm_isi  154.8216   56.2504 57     2.7524  0.0079
+  rbr_median         spsm_fwi   61.7073  210.2403 57     0.2935  0.7702
+  rbr_median  tsd:cumltve_yrs    1.4851    0.5287 63     2.8091  0.0066
+      slope1   post_fire_temp   -2.0296    0.9626 61    -2.1085  0.0391
+      slope1 post_fire_precip   -0.0006    0.0007 61    -0.8590  0.3937
+      slope1  tsd:cumltve_yrs    0.0259    0.0224 61     1.1578  0.2514
+  Std.Estimate   
+        0.1147   
+       -0.5748  *
+       -2.6210 **
+        2.1226   
+        0.3510 **
+        0.5812   
+        0.1978 **
+       -0.2710  *
+       -0.1117   
+        0.0339   
+
+  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05
+
+---
+Individual R-squared:
+
+    Response method Marginal Conditional
+  rbr_median   none     0.22        0.48
+      slope1   none     0.06        0.92</code></pre>
+</div>
+</div>
 </section>
 <section id="overviewsignificance" class="slide level2">
 <h2>overview/significance</h2>
