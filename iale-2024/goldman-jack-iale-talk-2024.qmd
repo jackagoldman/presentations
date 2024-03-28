@@ -1,6 +1,13 @@
 ---
 title: "Comparing forest recovery trajectories following wildfire in the presence and absence of spruce budworm defoliation using remotely sensed data"
-author: Jack A. Goldman^1^, Marie-Josée Fortin^2^, Patrick M.A. James^1^
+author: 
+  name: 
+  - "Jack A. Goldman^1^,"
+  - "Marie-Josée Fortin^2^," 
+  - "Patrick M.A. James^1^" 
+  affiliations: 
+  - ^1^Institute of Forestry and Conservation, University of Toronto
+  - ^2^Department of Ecology and Evolutionary Biology, University of toronto
 format: 
   revealjs:
     multiplex: true
@@ -13,6 +20,8 @@ format:
       data-background-size: 30%
       data-background-position: left
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup}
@@ -33,6 +42,8 @@ df <- df |>
 library(DiagrammeR)
 library(tmap)
 library(sf)
+library(gt)
+library(emmeans)
 #library(patchwork)
 #library(shadowtext)
 
@@ -157,16 +168,64 @@ DiagrammeR::grViz("content/chapter3-dag.gv")
 ## Our data
 
 ```{r}
-ggplot(df[df$defoliated == 1,], aes(tsd, fill = prov)) + 
-  geom_histogram(binwidth = 1, colour = "black", linetype = "dashed") +
-  theme_bw() + ggtitle("Frequency of Time Since Defoliation") + xlab("Time Since Defoliation") +
-  guides(fill = guide_legend(title = "Province"))
+
+df<- df |> dplyr::mutate(window_op = case_when(tsd <= 3 ~ "0-3",
+                               tsd >= 4 & tsd <=6 ~ "4-6",
+                               tsd >= 7 & tsd <= 9 ~"7-9",
+                              tsd >= 10 & tsd <= 12 ~"10-12",
+                              tsd >= 13 & tsd <= 15 ~"13-15"))
+
+
+df<- df |> dplyr::mutate(window_op = case_when(tsd <= 3 ~ "0-2",
+                               tsd >= 3 & tsd <=9 ~ "3-9",
+                               tsd >= 10 & tsd <= 15 ~"10-15"))
+
+baseLm <- lm(rbr_median~ window_op+ prov, data = df[df$defoliated == 1,])
+summary(baseLm)
+mm <- emmeans(baseLm, "window_op")
+ pairs(mm)
+ pwpm(mm)
+ 
+ 
+
+med <- ggplot(df, aes(x = window_op, y = rbr_median)) +
+  geom_boxplot() + 
+  scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
+  xlab("Window of Opportunity") +
+  ylab("Median Burn Severity") + 
+  ggtitle("Variation in Median Burn Severity based on Time Since Defoliation")+
+  guides(fill = guide_legend(title = "Province")) + 
+  theme_bw()
+
+
+ext <- ggplot(df, aes(x = window_op, y = rbr_extreme)) +
+  geom_boxplot() + 
+  scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
+  xlab("Window of Opportunity") +
+  ylab("Burn Severity Extremes") +
+  ggtitle("Variation in Median Burn Severity based on Time Since Defoliation")+
+  guides(fill = guide_legend(title = "Province")) + 
+  theme_bw()
+
+cv <- ggplot(df, aes(x = window_op, y = rbr_cv)) +
+  geom_boxplot() + 
+  scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
+  xlab("Window of Opportunity") +
+  ylab("Variability in Burn Severity")
+
 ```
+
+
 
 ## Preliminary Results
 
 ```{r}
+#| message: false
+#| warning: false
+
+
 library(piecewiseSEM)
+
 
 # create compositre
 comp_model <- lm(rbr_median ~ tsd + cumltve_yrs, data = df)
@@ -202,3 +261,43 @@ summary(sem2)
 
 
 ## overview/significance
+
+
+
+
+
+## acknowledgments
+:::: {.columns}
+
+::: {.column width="40%"}
+
+- Patrick MA James
+- Marie-Josée Fortin
+- Mike Wotton
+- James Caspersen
+- Bill Shipley
+- James Lab
+- Fortin Lab
+
+
+:::
+
+::: {.column width="60%"}
+
+![James Lab](content/IMG_8698.jpg)
+:::
+
+::::
+
+
+
+
+## distribution of tsd
+
+
+```{r}
+ggplot(df[df$defoliated == 1,], aes(tsd, fill = prov)) + 
+  geom_histogram(binwidth = 1, colour = "black", linetype = "dashed") +
+  theme_bw() + ggtitle("Frequency of Time Since Defoliation") + xlab("Time Since Defoliation") +
+  guides(fill = guide_legend(title = "Province"))
+```

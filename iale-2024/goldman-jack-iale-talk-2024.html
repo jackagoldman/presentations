@@ -12,7 +12,6 @@
 <link href="goldman-jack-iale-talk-2024_files/libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <meta name="author" content="Jack A. Goldman1, Marie-Josée Fortin2, Patrick M.A.&nbsp;James1">
   <title>Comparing forest recovery trajectories following wildfire in the presence and absence of spruce budworm defoliation using remotely sensed data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -336,9 +335,15 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;James<sup>1</sup> 
+Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;James<sup>1</sup>, 
 </div>
-</div>
+        <p class="quarto-title-affiliation">
+            <sup>1</sup>Institute of Forestry and Conservation, University of Toronto
+          </p>
+        <p class="quarto-title-affiliation">
+            <sup>2</sup>Department of Ecology and Evolutionary Biology, University of toronto
+          </p>
+    </div>
 </div>
 
 </section>
@@ -386,8 +391,19 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
 <li class="fragment">we decided to approach this problem different and try to reduce the uncertainty and remove noise</li>
 </ul>
 </section>
-<section id="quasi-experimental-approach" class="slide level2">
-<h2>Quasi-experimental approach</h2>
+<section id="research-question" class="slide level2">
+<h2>Research Question</h2>
+<p>How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?</p>
+<ol type="1">
+<li class="fragment">How does SBW defoliation influence burn severity?</li>
+<li class="fragment">How does SBW defoliation influence post-fire recovery?</li>
+</ol>
+<ul>
+<li class="fragment">Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?</li>
+</ul>
+</section>
+<section id="experimental-approach" class="slide level2">
+<h2>Experimental approach</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
@@ -418,21 +434,6 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
           display:block!important;
       }</style></aside>
 </section>
-<section id="research-question" class="slide level2">
-<h2>Research Question</h2>
-<p>How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?</p>
-<ol type="1">
-<li class="fragment">How does SBW defoliation influence burn severity?</li>
-<li class="fragment">How does SBW defoliation influence post-fire recovery?</li>
-</ol>
-<ul>
-<li class="fragment">Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?</li>
-</ul>
-</section>
-<section id="our-data" class="slide level2">
-<h2>Our data</h2>
-
-<img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
 <section id="methodssynthetic-index" class="slide level2">
 <h2>Methods/synthetic index</h2>
 </section>
@@ -440,11 +441,15 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
 <h2>Hypothesized causal network</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-2ba427fea4b3ce53f8bd" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-2ba427fea4b3ce53f8bd">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-eea9513096f4a6d18fec" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-eea9513096f4a6d18fec">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
+<section id="our-data" class="slide level2">
+<h2>Our data</h2>
+
+<img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
 <section id="preliminary-results" class="slide level2">
 <h2>Preliminary Results</h2>
 <div class="cell">
@@ -453,80 +458,60 @@ Jack A. Goldman<sup>1</sup>, Marie-Josée Fortin<sup>2</sup>, Patrick M.A.&nbsp;
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |========                                                              |  11%
+  |==============                                                        |  20%
   |                                                                            
-  |================                                                      |  22%
+  |============================                                          |  40%
   |                                                                            
-  |=======================                                               |  33%
+  |==========================================                            |  60%
   |                                                                            
-  |===============================                                       |  44%
-  |                                                                            
-  |=======================================                               |  56%
-  |                                                                            
-  |===============================================                       |  67%
-  |                                                                            
-  |======================================================                |  78%
-  |                                                                            
-  |==============================================================        |  89%
+  |========================================================              |  80%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Structural Equation Model of sem 
+Structural Equation Model of sem1 
 
 Call:
-  rbr_median ~ spsm_dc + spsm_ffmc + spsm_dmc + spsm_bui + spsm_isi + spsm_fwi + tsd:cumltve_yrs
-  slope1 ~ post_fire_temp + post_fire_precip + tsd:cumltve_yrs
+  rbr_median ~ spsm_bui + spsm_isi + composite
+  slope1 ~ rbr_median + post_fire_temp + post_fire_precip
 
     AIC
- 2406.575
+ 2426.277
 
 ---
 Tests of directed separation:
 
-                       Independ.Claim Test.Type DF Crit.Value P.Value    
-               slope1 ~ spsm_dc + ...      coef 62    -0.5488  0.5851    
-             slope1 ~ spsm_ffmc + ...      coef 62     1.0119  0.3155    
-              slope1 ~ spsm_dmc + ...      coef 62     0.8491  0.3991    
-              slope1 ~ spsm_bui + ...      coef 62     1.1067  0.2727    
-              slope1 ~ spsm_isi + ...      coef 62    -0.4869  0.6280    
-              slope1 ~ spsm_fwi + ...      coef 62     1.2404  0.2195    
-    rbr_median ~ post_fire_temp + ...      coef 62    -1.0215  0.3110    
-  rbr_median ~ post_fire_precip + ...      coef 62     1.5145  0.1350    
-            slope1 ~ rbr_median + ...      coef 60     5.1491  0.0000 ***
+                       Independ.Claim Test.Type DF Crit.Value P.Value 
+              slope1 ~ spsm_bui + ...      coef 62     1.1970  0.2359 
+              slope1 ~ spsm_isi + ...      coef 62    -0.9709  0.3354 
+             slope1 ~ composite + ...      coef 60    -0.4963  0.6215 
+    rbr_median ~ post_fire_temp + ...      coef 62    -0.8932  0.3752 
+  rbr_median ~ post_fire_precip + ...      coef 62     1.7340  0.0879 
 
 --
 Global goodness-of-fit:
 
-Chi-Squared = 50.997 with P-value = 0 and on 9 degrees of freedom
-Fisher's C = 43.516 with P-value = 0.001 and on 18 degrees of freedom
+Chi-Squared = 6.052 with P-value = 0.301 and on 5 degrees of freedom
+Fisher's C = 12.849 with P-value = 0.232 and on 10 degrees of freedom
 
 ---
 Coefficients:
 
-    Response        Predictor  Estimate Std.Error DF Crit.Value P.Value
-  rbr_median          spsm_dc    0.4971    0.7930 57     0.6268  0.5333
-  rbr_median        spsm_ffmc  -83.0042   36.7099 57    -2.2611  0.0276
-  rbr_median         spsm_dmc -302.2397  108.0545 57    -2.7971  0.0070
-  rbr_median         spsm_bui  144.0881  151.5818 57     0.9506  0.3458
-  rbr_median         spsm_isi  154.8216   56.2504 57     2.7524  0.0079
-  rbr_median         spsm_fwi   61.7073  210.2403 57     0.2935  0.7702
-  rbr_median  tsd:cumltve_yrs    1.4851    0.5287 63     2.8091  0.0066
-      slope1   post_fire_temp   -2.0296    0.9626 61    -2.1085  0.0391
-      slope1 post_fire_precip   -0.0006    0.0007 61    -0.8590  0.3937
-      slope1  tsd:cumltve_yrs    0.0259    0.0224 61     1.1578  0.2514
-  Std.Estimate   
-        0.1147   
-       -0.5748  *
-       -2.6210 **
-        2.1226   
-        0.3510 **
-        0.5812   
-        0.1978 **
-       -0.2710  *
-       -0.1117   
-        0.0339   
+    Response        Predictor Estimate Std.Error DF Crit.Value P.Value
+  rbr_median         spsm_bui -18.1808    7.5576 61    -2.4056  0.0192
+  rbr_median         spsm_isi 120.6939   49.1081 61     2.4577  0.0168
+  rbr_median        composite   0.8514    0.3748 63     2.2716  0.0265
+      slope1       rbr_median   0.0213    0.0040 61     5.2585  0.0000
+      slope1   post_fire_temp  -1.7543    0.9290 61    -1.8883  0.0637
+      slope1 post_fire_precip  -0.0006    0.0007 61    -0.9496  0.3461
+  Std.Estimate    
+       -0.2678   *
+        0.2736   *
+        0.1528   *
+        0.2090 ***
+       -0.2342    
+       -0.1193    
 
   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05
 
@@ -534,14 +519,110 @@ Coefficients:
 Individual R-squared:
 
     Response method Marginal Conditional
-  rbr_median   none     0.22        0.48
-      slope1   none     0.06        0.92</code></pre>
+  rbr_median   none     0.11        0.48
+      slope1   none     0.10        0.94</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==============                                                        |  20%
+  |                                                                            
+  |============================                                          |  40%
+  |                                                                            
+  |==========================================                            |  60%
+  |                                                                            
+  |========================================================              |  80%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Structural Equation Model of sem2 
+
+Call:
+  rbr_median ~ spsm_bui + spsm_isi + composite
+  slope2 ~ rbr_median + post_fire_temp + post_fire_precip
+
+    AIC
+ 2311.709
+
+---
+Tests of directed separation:
+
+                       Independ.Claim Test.Type DF Crit.Value P.Value 
+              slope2 ~ spsm_bui + ...      coef 62    -0.9907  0.3257 
+              slope2 ~ spsm_isi + ...      coef 62    -0.2103  0.8341 
+             slope2 ~ composite + ...      coef 60     0.3162  0.7529 
+    rbr_median ~ post_fire_temp + ...      coef 62    -0.8932  0.3752 
+  rbr_median ~ post_fire_precip + ...      coef 62     1.7340  0.0879 
+
+--
+Global goodness-of-fit:
+
+Chi-Squared = 0.547 with P-value = 0.99 and on 5 degrees of freedom
+Fisher's C = 9.998 with P-value = 0.441 and on 10 degrees of freedom
+
+---
+Coefficients:
+
+    Response        Predictor Estimate Std.Error DF Crit.Value P.Value
+  rbr_median         spsm_bui -18.1808    7.5576 61    -2.4056  0.0192
+  rbr_median         spsm_isi 120.6939   49.1081 61     2.4577  0.0168
+  rbr_median        composite   0.8514    0.3748 63     2.2716  0.0265
+      slope2       rbr_median   0.0015    0.0025 61     0.6088  0.5449
+      slope2   post_fire_temp   3.0673    0.5980 61     5.1296  0.0000
+      slope2 post_fire_precip   0.0007    0.0004 61     1.6822  0.0976
+  Std.Estimate    
+       -0.2678   *
+        0.2736   *
+        0.1528   *
+        0.0209    
+        0.5714 ***
+        0.1901    
+
+  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05
+
+---
+Individual R-squared:
+
+    Response method Marginal Conditional
+  rbr_median   none     0.11        0.48
+      slope2   none     0.28        0.96</code></pre>
 </div>
 </div>
 </section>
 <section id="overviewsignificance" class="slide level2">
 <h2>overview/significance</h2>
-<div class="footer footer-default">
+</section>
+<section id="acknowledgments" class="slide level2">
+<h2>acknowledgments</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li class="fragment">Patrick MA James</li>
+<li class="fragment">Marie-Josée Fortin</li>
+<li class="fragment">Mike Wotton</li>
+<li class="fragment">James Caspersen</li>
+<li class="fragment">Bill Shipley</li>
+<li class="fragment">James Lab</li>
+<li class="fragment">Fortin Lab</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="content/IMG_8698.jpg"></p>
+<figcaption>James Lab</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="distribution-of-tsd" class="slide level2">
+<h2>distribution of tsd</h2>
+
+<img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div class="footer footer-default">
 <p>jackagoldman.github.io</p>
 </div>
 </section>
