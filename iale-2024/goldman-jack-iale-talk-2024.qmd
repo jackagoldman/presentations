@@ -44,6 +44,9 @@ library(tmap)
 library(sf)
 library(gt)
 library(emmeans)
+library(lme4)
+library(optimx)
+library(lmerTest)
 #library(patchwork)
 #library(shadowtext)
 
@@ -176,18 +179,36 @@ df<- df |> dplyr::mutate(window_op = case_when(tsd <= 3 ~ "0-3",
                               tsd >= 13 & tsd <= 15 ~"13-15"))
 
 
-df<- df |> dplyr::mutate(window_op = case_when(tsd <= 3 ~ "0-2",
-                               tsd >= 3 & tsd <=9 ~ "3-9",
-                               tsd >= 10 & tsd <= 15 ~"10-15"))
 
-baseLm <- lm(rbr_median~ window_op+ prov, data = df[df$defoliated == 1,])
-summary(baseLm)
-mm <- emmeans(baseLm, "window_op")
- pairs(mm)
- pwpm(mm)
- 
- 
+unique(df$cumltve_yrs)
+pairs(emmeans(lme(rbr_median~ as.factor(cumltve_yrs), data = df), "cumltve_yrs"), adjust = "Tukey")
 
+ 
+pairs(emmeans(lmer(rbr_median~ as.factor(window_op) + (1+id_nest|prov), data = df), "window_op"), adjust = "Tukey")
+
+summary(lm(rbr_median ~ tsd:cumltve_yrs, data = df))
+
+m <- lmer(rbr_median~ factor(window_op) + (1 |prov/id_nest) , data = df, 
+        REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
+
+pairs(emmeans(m, "window_op"), adjust = "Tukey")
+
+anova(m)
+
+m2 <- lmer(rbr_median~ spsm_isi + spsm_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_year) , data = df, 
+        REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
+
+anova(m2)
+
+MuMIn::r.squaredGLMM(m2)
+
+
+
+###
 med <- ggplot(df, aes(x = window_op, y = rbr_median)) +
   geom_boxplot() + 
   scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
@@ -236,26 +257,49 @@ beta_years <- summary(comp_model)$coefficients[3, 1]
 
 df$composite <- beta_td * df$tsd + beta_years * df$cumltve_yrs
 
+df$s_isi <- scale(df$spsm_isi)
+df$s_bui <- scale(df$spsm_bui)
+df$s_temp <- scale(df$post_fire_temp)
+df$s_precip<- scale(df$post_fire_precip)
+
 
 # model first 5 years
-sem1 <-  piecewiseSEM::psem(
-  lme(rbr_median ~ spsm_bui + spsm_isi + composite, random = ~ 1| id_nest, data = df),
-  
-  lme(slope1 ~ rbr_median + post_fire_temp + post_fire_precip, random = ~ 1| id_nest, data = df)
+sem1 <- psem(
+
+lmer(rbr_median~ s_isi + s_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_year) , data = df, 
+        REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B'))),
+
+  lmer(slope1 ~ rbr_median + s_temp + s_precip+ (0+id_nest|prov) + (1|fire_year), data = df,
+       REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
+
+
 )
 
 summary(sem1)
 
 
 # model second 5 years
-sem2 <-  piecewiseSEM::psem(
-  lme(rbr_median ~ spsm_bui + spsm_isi + composite, random = ~ 1| id_nest, data = df),
-  
-  lme(slope2 ~ rbr_median + post_fire_temp + post_fire_precip, random = ~ 1| id_nest, data = df)
+
+sem2 <- psem(
+
+lmer(rbr_median~ s_isi + s_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_year) , data = df, 
+        REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B'))),
+
+  lmer(slope2 ~ rbr_median + s_temp + s_precip+ (0+id_nest|prov) + (1|fire_year), data = df,
+       REML = FALSE,
+        control = lmerControl(
+                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
+
+
 )
 
 summary(sem2)
-
 ```
 
 
