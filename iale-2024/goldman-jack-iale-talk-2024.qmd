@@ -157,16 +157,30 @@ Latent composite variables are used to represent a property (in this case defoli
 The error terms indicate that we do not include all the possible predictors because the condition of defoliation severity may also include unobservables. 
 :::
 
-
-## Methods/synthetic index
-
 ## Hypothesized causal network
 
 ```{r dev.args = list(bg = 'transparent')}
 DiagrammeR::grViz("content/chapter3-dag.gv")
 ```
 
+::: {.notes}
+We used piecewise structural equation models too explore the causal pathways between forest structure, snow melt and remotely-sensed burn severity. We fit our pSEM using linear mixed effects models controlling for size class and fire year. We know about these relationships but we don’t know we don’t know the weights, therefore this approach allows us to compare the weights of the causal pathways. (standardized regression coefficients)
 
+When studying complex interactions, it is difficult to isolate the individual effects of different pathways. However new developments in structural equation modelling allow us to tease apart the relative contributions of a single driver when the mediation effects of others are taken into effect. 
+SEM allow us to examine causal relationships among variables, while simultaneously accounting for measurement error and condition effects based on other covariates.
+
+:::
+
+## Data
+
+
+::: {.notes}
+We gathered remotely sensed snow cover and burn severity using Google Earth Engine (GEE). 
+We initially gathered wildfire severity maps for each fire that burned in our study area based on the wildfire database for Ontario (77). 
+Burn severity was measured using the relativized burn ratio (RBR), a Landsat-based fire severity metric that represents the change in forest cover following a fire relative to the amount of pre-fire vegetative cover rather than the absolute change. 
+RBR maps were calculated using mean composited multispectral imagery from Landsat-TM, -ETM and -OLI, following the hybrid method developed for the boreal forest region by Holsinger, Parks (35) that uses MODIS imagery to determine start and end date of fires. 
+
+:::
 
 ## Our data
 
@@ -177,62 +191,18 @@ df<- df |> dplyr::mutate(window_op = case_when(tsd <= 3 ~ "0-3",
                                tsd >= 7 & tsd <= 9 ~"7-9",
                               tsd >= 10 & tsd <= 12 ~"10-12",
                               tsd >= 13 & tsd <= 15 ~"13-15"))
-
-
-
-unique(df$cumltve_yrs)
-pairs(emmeans(lme(rbr_median~ as.factor(cumltve_yrs), data = df), "cumltve_yrs"), adjust = "Tukey")
-
- 
-pairs(emmeans(lmer(rbr_median~ as.factor(window_op) + (1+id_nest|prov), data = df), "window_op"), adjust = "Tukey")
-
-summary(lm(rbr_median ~ tsd:cumltve_yrs, data = df))
-
-m <- lmer(rbr_median~ factor(window_op) + (1 |prov/id_nest) , data = df, 
-        REML = FALSE,
-        control = lmerControl(
-                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
-
-pairs(emmeans(m, "window_op"), adjust = "Tukey")
-
-anova(m)
-
-m2 <- lmer(rbr_median~ spsm_isi + spsm_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_year) , data = df, 
-        REML = FALSE,
-        control = lmerControl(
-                           optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
-
-anova(m2)
-
-MuMIn::r.squaredGLMM(m2)
-
-
-
 ###
-med <- ggplot(df, aes(x = window_op, y = rbr_median)) +
+med <- ggplot(df, aes(x = window_op, y = rbr_median, fill = prov)) +
   geom_boxplot() + 
   scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
-  xlab("Window of Opportunity") +
+  xlab("Time Since Defoliation") +
   ylab("Median Burn Severity") + 
-  ggtitle("Variation in Median Burn Severity based on Time Since Defoliation")+
+  ggtitle("Differences in Median Burn Severity based on Time Since Defoliation")+
   guides(fill = guide_legend(title = "Province")) + 
   theme_bw()
 
 
-ext <- ggplot(df, aes(x = window_op, y = rbr_extreme)) +
-  geom_boxplot() + 
-  scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
-  xlab("Window of Opportunity") +
-  ylab("Burn Severity Extremes") +
-  ggtitle("Variation in Median Burn Severity based on Time Since Defoliation")+
-  guides(fill = guide_legend(title = "Province")) + 
-  theme_bw()
-
-cv <- ggplot(df, aes(x = window_op, y = rbr_cv)) +
-  geom_boxplot() + 
-  scale_x_discrete(labels = c('0-3','4-6','7-9', '10-12', '13-15')) +
-  xlab("Window of Opportunity") +
-  ylab("Variability in Burn Severity")
+med
 
 ```
 
@@ -243,6 +213,7 @@ cv <- ggplot(df, aes(x = window_op, y = rbr_cv)) +
 ```{r}
 #| message: false
 #| warning: false
+#| include: false
 
 
 library(piecewiseSEM)
@@ -263,6 +234,8 @@ df$s_temp <- scale(df$post_fire_temp)
 df$s_precip<- scale(df$post_fire_precip)
 
 
+
+
 # model first 5 years
 sem1 <- psem(
 
@@ -280,6 +253,40 @@ lmer(rbr_median~ s_isi + s_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_ye
 )
 
 summary(sem1)
+
+graph <- plot(sem1, return = TRUE)
+
+
+graph$nodes_df[[4,3]] <- 'BUI'
+graph$nodes_df[[3,3]] <- 'ISI'
+graph$nodes_df[[2,3]] <- '1-5 Slope'
+graph$nodes_df[[5,3]] <- 'tsd x cyd'
+graph$nodes_df[[6,3]] <- 'mean\ntemperature'
+graph$nodes_df[[7,3]] <- 'total\nprecipitation'
+graph$nodes_df[[1,3]] <- 'Median Severity'
+
+
+gsem1 <- graph |> 
+   set_node_attrs(
+    node_attr = color,
+    values = "black", 
+    nodes = c(3,4,5,6,7)) |>
+  set_node_attrs(
+    node_attr = color,
+    values = "red", 
+    nodes = c(1,2)) |>
+  set_node_attrs(node_attr = "fixedsize",
+                 values = FALSE) |> 
+  set_edge_attrs(edge_attr = color,
+                 values = "grey") |> 
+    set_edge_attrs(edge_attr = dir,
+                 values = "forward") |> 
+  render_graph(layout = "tree")
+
+#global attributes, use to change labels
+graph |>  get_global_graph_attr_info()
+
+
 
 
 # model second 5 years
@@ -300,14 +307,60 @@ lmer(rbr_median~ s_isi + s_bui + tsd:cumltve_yrs + (0+id_nest|prov) + (1|fire_ye
 )
 
 summary(sem2)
+
+graph2 <- plot(sem2, return = TRUE)
+
+
+graph2$nodes_df[[4,3]] <- 'BUI'
+graph2$nodes_df[[3,3]] <- 'ISI'
+graph2$nodes_df[[2,3]] <- '6-10 Slope'
+graph2$nodes_df[[5,3]] <- 'tsd x cyd'
+graph2$nodes_df[[6,3]] <- 'mean\ntemperature'
+graph2$nodes_df[[7,3]] <- 'total\nprecipitation'
+graph2$nodes_df[[1,3]] <- 'Median Severity'
+
+
+gsem2 <- graph2|> 
+   set_node_attrs(
+    node_attr = color,
+    values = "black", 
+    nodes = c(3,4,5,6,7)) |>
+  set_node_attrs(
+    node_attr = color,
+    values = "red", 
+    nodes = c(1,2)) |>
+  set_node_attrs(node_attr = "fixedsize",
+                 values = FALSE) |> 
+  set_edge_attrs(edge_attr = color,
+                 values = "grey") |> 
+    set_edge_attrs(edge_attr = dir,
+                 values = "forward") |> 
+  render_graph(layout = "tree")
+
+
+
+
 ```
 
 
+::: {layout-ncol=2}
 
-## overview/significance
+```{r}
+gsem1
+```
+
+```{r}
+gsem2
+```
 
 
+:::
 
+## Takeaways
+
+1. Median burn severity had a significant impact on recovery for the first 5 years following fire but not for the second 5 years. 
+2. Mean temperature and total precipitation had a positive effect on the second half of recovery but a negative effect on the first. 
+3. defoliation indirectly effects slope of recovery for the first 5 years post fire through increases in median burn severity.
 
 
 ## acknowledgments
