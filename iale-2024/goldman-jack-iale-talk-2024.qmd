@@ -123,9 +123,96 @@ library(lmerTest)
 
 How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?
 
-1. How does SBW defoliation influence burn severity?
-2. How does SBW defoliation influence post-fire recovery?
 - Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?
+
+```{python}
+#| include: false
+
+
+import pandas as pd
+import geopandas as gd
+import pygmt
+
+defol = gd.read_file("/Users/jgoldman/Desktop/OneDrive - University of Toronto/Data/chapter_3/on-qc-defol.shp")
+non_defol = gd.read_file("/Users/jgoldman/Desktop/OneDrive - University of Toronto/Data/chapter_3/on-qc-nondefol.shp")
+
+#get centroids
+defol["x"] = defol.centroid.x
+defol["y"] = defol.centroid.y
+
+non_defol["x"] = non_defol.centroid.x
+non_defol["y"] = non_defol.centroid.y
+
+# merge dfs
+studyDF = pd.concat([defol, non_defol])
+
+# rename XY to lat and long
+studyDF = studyDF.rename(columns ={'x': 'longitude', 'y': 'latitude'})
+
+# Set the region for the plot to be slightly larger than the data bounds.
+region = [
+    studyDF.longitude.min() - 1,
+    studyDF.longitude.max() + 1,
+    studyDF.latitude.min() - 1,
+    studyDF.latitude.max() + 1,
+]
+
+print(region)
+
+fig = pygmt.Figure()
+fig.basemap(region=region, projection="M15c", frame=True)
+fig.coast( land="lightgreen", 
+    water="lightblue",
+    shorelines=True,
+    dcw=[
+        # Ontario with black line
+        "CA.ON+p1p,black",
+        "CA.QC+p1p,black"
+    ],
+)
+
+pygmt.makecpt(cmap="plasma", series=[studyDF.Fire_Year.min(), studyDF.Fire_Year.max()])
+fig.plot(x=studyDF.longitude, y=studyDF.latitude, style="t0.18c", color=studyDF.Fire_Year, cmap=True)
+fig.colorbar( 
+             position = "jBL+o1c/2c+w7c/+w4c/0.5c+h",
+             box ="+gwhite+p1p",
+             frame=["af", "x+lFire Year"],
+             )
+
+#Create an inset map, setting the position to bottom right, and the x- and
+# y-offsets to 0.1 cm, respectively.
+# The inset map contains the Japan main land. "U54S/3c" means UTM projection
+# with a map width of 3 cm. The inset width and height are automatically
+# calculated from the specified ``region`` and ``projection`` parameters.
+# Draws a rectangular box around the inset with a fill color of "white" and
+# a pen of "1p".
+with fig.inset(
+    region="CA",
+    position="jTR+o0.1c",
+    box="+gwhite+p1p",
+    projection="M3c",
+    
+):
+    # Highlight the Japan area in "lightbrown"
+    # and draw its outline with a pen of "0.2p". #CA.ON+gred #"CA+glightbrown+p1p"
+    fig.coast(land="gray",
+        borders=[1, 2],
+        shorelines="1/thin",
+        water="white",
+        dcw=["CA.ON+gred","CA.QC+gred"],
+        area_thresh=10000,
+    )
+    # Plot a rectangle ("r") in the inset map to show the area of the main
+    # figure. "+s" means that the first two columns are the longitude and
+    # latitude of the bottom left corner of the rectangle, and the last two
+    # columns the longitude and latitude of the uppper right corner.
+    #rectangle = [[region[0], region[2], region[1], region[3]]]
+    #fig.plot(data=rectangle, style="r+s", pen="2p,blue")
+
+fig.show()
+
+```
+
 
 
 ## Experimental approach
