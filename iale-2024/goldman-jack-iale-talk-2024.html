@@ -335,7 +335,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;James<sup>1</sup>, 
+Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;James<sup>1</sup> 
 </div>
         <p class="quarto-title-affiliation">
             <sup>1</sup>Institute of Forestry and Conservation, University of Toronto
@@ -434,17 +434,44 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
           display:block!important;
       }</style></aside>
 </section>
-<section id="methodssynthetic-index" class="slide level2">
-<h2>Methods/synthetic index</h2>
-</section>
 <section id="hypothesized-causal-network" class="slide level2">
 <h2>Hypothesized causal network</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-eea9513096f4a6d18fec" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-eea9513096f4a6d18fec">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-7f61dd8aaea47db94854" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-7f61dd8aaea47db94854">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tT [label=\"Time Since Defoliation\" shape=rect ]\n\tY [label=\"Number of Years Defoliated\" shape=rect ]\n\tC [label=\"Defoliation Intensity\" shape=doubleoctagon]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tDC [label = \"Drought Code\" shape=rect]\n\tFC [label = \"Fine Fuel Moisture Code\" shape=rect]\n\tDMC [label = \"Duff Moisture Code\" shape=rect]\n\t\nsubgraph clusterSI{\n  T -> C\n\tY -> C\n\tC -> B\n\tstyle=invis;\n}\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  DC -> B;\n\tFC -> B;\n\tDMC -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
+<aside class="notes">
+<p>We used piecewise structural equation models too explore the causal pathways between forest structure, snow melt and remotely-sensed burn severity. We fit our pSEM using linear mixed effects models controlling for size class and fire year. We know about these relationships but we don’t know we don’t know the weights, therefore this approach allows us to compare the weights of the causal pathways. (standardized regression coefficients)</p>
+<p>When studying complex interactions, it is difficult to isolate the individual effects of different pathways. However new developments in structural equation modelling allow us to tease apart the relative contributions of a single driver when the mediation effects of others are taken into effect. SEM allow us to examine causal relationships among variables, while simultaneously accounting for measurement error and condition effects based on other covariates.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="data" class="slide level2">
+<h2>Data</h2>
+<aside class="notes">
+<p>We gathered remotely sensed snow cover and burn severity using Google Earth Engine (GEE). We initially gathered wildfire severity maps for each fire that burned in our study area based on the wildfire database for Ontario (77). Burn severity was measured using the relativized burn ratio (RBR), a Landsat-based fire severity metric that represents the change in forest cover following a fire relative to the amount of pre-fire vegetative cover rather than the absolute change. RBR maps were calculated using mean composited multispectral imagery from Landsat-TM, -ETM and -OLI, following the hybrid method developed for the boreal forest region by Holsinger, Parks (35) that uses MODIS imagery to determine start and end date of fires.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="our-data" class="slide level2">
 <h2>Our data</h2>
@@ -452,149 +479,30 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 <img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
 <section id="preliminary-results" class="slide level2">
 <h2>Preliminary Results</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  |                                                                            
-  |                                                                      |   0%
-  |                                                                            
-  |==============                                                        |  20%
-  |                                                                            
-  |============================                                          |  40%
-  |                                                                            
-  |==========================================                            |  60%
-  |                                                                            
-  |========================================================              |  80%
-  |                                                                            
-  |======================================================================| 100%</code></pre>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-fd0463759830d032d87e" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-fd0463759830d032d87e">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"1-5 Slope\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"ISI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"BUI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"tsd x cyd\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.207 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.275 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.246 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Structural Equation Model of sem1 
-
-Call:
-  rbr_median ~ spsm_bui + spsm_isi + composite
-  slope1 ~ rbr_median + post_fire_temp + post_fire_precip
-
-    AIC
- 2426.277
-
----
-Tests of directed separation:
-
-                       Independ.Claim Test.Type DF Crit.Value P.Value 
-              slope1 ~ spsm_bui + ...      coef 62     1.1970  0.2359 
-              slope1 ~ spsm_isi + ...      coef 62    -0.9709  0.3354 
-             slope1 ~ composite + ...      coef 60    -0.4963  0.6215 
-    rbr_median ~ post_fire_temp + ...      coef 62    -0.8932  0.3752 
-  rbr_median ~ post_fire_precip + ...      coef 62     1.7340  0.0879 
-
---
-Global goodness-of-fit:
-
-Chi-Squared = 6.052 with P-value = 0.301 and on 5 degrees of freedom
-Fisher's C = 12.849 with P-value = 0.232 and on 10 degrees of freedom
-
----
-Coefficients:
-
-    Response        Predictor Estimate Std.Error DF Crit.Value P.Value
-  rbr_median         spsm_bui -18.1808    7.5576 61    -2.4056  0.0192
-  rbr_median         spsm_isi 120.6939   49.1081 61     2.4577  0.0168
-  rbr_median        composite   0.8514    0.3748 63     2.2716  0.0265
-      slope1       rbr_median   0.0213    0.0040 61     5.2585  0.0000
-      slope1   post_fire_temp  -1.7543    0.9290 61    -1.8883  0.0637
-      slope1 post_fire_precip  -0.0006    0.0007 61    -0.9496  0.3461
-  Std.Estimate    
-       -0.2678   *
-        0.2736   *
-        0.1528   *
-        0.2090 ***
-       -0.2342    
-       -0.1193    
-
-  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05
-
----
-Individual R-squared:
-
-    Response method Marginal Conditional
-  rbr_median   none     0.11        0.48
-      slope1   none     0.10        0.94</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  |                                                                            
-  |                                                                      |   0%
-  |                                                                            
-  |==============                                                        |  20%
-  |                                                                            
-  |============================                                          |  40%
-  |                                                                            
-  |==========================================                            |  60%
-  |                                                                            
-  |========================================================              |  80%
-  |                                                                            
-  |======================================================================| 100%</code></pre>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-0a40a296511f34a60ff3" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0a40a296511f34a60ff3">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"6-10 Slope\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"ISI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"BUI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"tsd x cyd\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"dashed\", color = \"grey\", label = \" 0.057 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.403 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.136 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Structural Equation Model of sem2 
-
-Call:
-  rbr_median ~ spsm_bui + spsm_isi + composite
-  slope2 ~ rbr_median + post_fire_temp + post_fire_precip
-
-    AIC
- 2311.709
-
----
-Tests of directed separation:
-
-                       Independ.Claim Test.Type DF Crit.Value P.Value 
-              slope2 ~ spsm_bui + ...      coef 62    -0.9907  0.3257 
-              slope2 ~ spsm_isi + ...      coef 62    -0.2103  0.8341 
-             slope2 ~ composite + ...      coef 60     0.3162  0.7529 
-    rbr_median ~ post_fire_temp + ...      coef 62    -0.8932  0.3752 
-  rbr_median ~ post_fire_precip + ...      coef 62     1.7340  0.0879 
-
---
-Global goodness-of-fit:
-
-Chi-Squared = 0.547 with P-value = 0.99 and on 5 degrees of freedom
-Fisher's C = 9.998 with P-value = 0.441 and on 10 degrees of freedom
-
----
-Coefficients:
-
-    Response        Predictor Estimate Std.Error DF Crit.Value P.Value
-  rbr_median         spsm_bui -18.1808    7.5576 61    -2.4056  0.0192
-  rbr_median         spsm_isi 120.6939   49.1081 61     2.4577  0.0168
-  rbr_median        composite   0.8514    0.3748 63     2.2716  0.0265
-      slope2       rbr_median   0.0015    0.0025 61     0.6088  0.5449
-      slope2   post_fire_temp   3.0673    0.5980 61     5.1296  0.0000
-      slope2 post_fire_precip   0.0007    0.0004 61     1.6822  0.0976
-  Std.Estimate    
-       -0.2678   *
-        0.2736   *
-        0.1528   *
-        0.0209    
-        0.5714 ***
-        0.1901    
-
-  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05
-
----
-Individual R-squared:
-
-    Response method Marginal Conditional
-  rbr_median   none     0.11        0.48
-      slope2   none     0.28        0.96</code></pre>
+</div>
 </div>
 </div>
 </section>
-<section id="overviewsignificance" class="slide level2">
-<h2>overview/significance</h2>
+<section id="takeaways" class="slide level2">
+<h2>Takeaways</h2>
+<ol type="1">
+<li class="fragment">Median burn severity had a significant impact on recovery for the first 5 years following fire but not for the second 5 years.</li>
+<li class="fragment">Mean temperature and total precipitation had a positive effect on the second half of recovery but a negative effect on the first.</li>
+<li class="fragment">defoliation indirectly effects slope of recovery for the first 5 years post fire through increases in median burn severity.</li>
+</ol>
 </section>
 <section id="acknowledgments" class="slide level2">
 <h2>acknowledgments</h2>
@@ -622,7 +530,7 @@ Individual R-squared:
 <section id="distribution-of-tsd" class="slide level2">
 <h2>distribution of tsd</h2>
 
-<img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+<img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><div class="footer footer-default">
 <p>jackagoldman.github.io</p>
 </div>
 </section>
