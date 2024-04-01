@@ -68,15 +68,15 @@ library(lmerTest)
 :::: {.columns}
 
 ::: {.column width="60%"}
--   Wildfire and SBW defoliationmost widespread disturbances in the eastern boreal forest
-- SBW Affected over 9.6 mha of Eastern boreal forest in since 2006
+- Wildfire and spruce budworm (SBW) defoliation are the most widespread disturbances in the eastern boreal forest
 
--   Boreal forests are adapted to both stand-replacing wildfire and spruce budworm defoliation
+- SBW affected over 9.6 mha of Eastern boreal forest in since 2006
 
--   independently, each disturbance facilitates the regeneration of boreal forest stands
+- Boreal forests are adapted to both stand-replacing wildfire and SBW defoliation
 
+- Independently, each disturbance facilitates the regeneration of boreal forest stands, however the impacts of their interactions remain uncertain
 
--   However due to CC. the spatial legacies of defoliated areas are being increasingly burned, with consequences for wildfire behaviour and implications for wildfire recovery
+- The uncertain interactions between them are amplified by climate change
 
 :::
 
@@ -87,16 +87,16 @@ library(lmerTest)
 
 ::::
 
-## Wildfire behaviour and post-fire recovery
+## Wildfire behavior and post-fire recovery
 
 :::: {.columns}
 
 ::: {.column width="60%"}
 
-- SBW legacies alter connectivity and amount of flammable fuels
-- Potentially altering wildfire behaviour (i.e., burn severity)
-- Wildfire behaviour directly influence post-fire recovery by..
-- Shifts in the wildfire behavior due to SBW legacies may lead to divergent post-fire recovery trajectories.
+- Spatial legacies of outbreaks alter connectivity and amount of flammable fuels
+- Altering wildfire behavior (e.g.,intensity) and their outcomes (e.g., burn severity)
+- Intensity and severity directly influence post-fire recovery
+- Shifts in severity due to legacies of outbreaks may lead to divergent post-fire recovery trajectories.
 
 :::
 
@@ -107,21 +107,51 @@ library(lmerTest)
 
 ::::
 
+::: {.notes}
+What is the fire behavior triangle?
+- a particular part of fuels is insect outbreaks 
 
-## Current understanding of SBW x Wildfire behaviour is unclear
 
--  SBW defoliation has been shown to increase wildfire behaviour (Flemind and Candau 2002; Jame et al. 2017)
-- In the west, Western SBW has been shown to decrease wildfire behaviour
+
+:::
+
+## Current understanding of SBW x Wildfire behavior is unclear
+
+::::{.columns}
+
+:::{.column width="60%"}
+- Spatial legacies of outbreaks have been shown to increase wildfire behavior (Fleming and Candau 2002; Jame et al. 2017)
 - Various other studies report no effect
--   window of opportunity
--   why? 
-- one potential reason for the lack of consistency in the findings is that wildfires are noisy, and we are trying to detect a small signal (specific change in fuel), in a large and noisy system.
--   big data problem?
-- we decided to approach this problem different and try to reduce the uncertainty and remove noise 
+1. wildfires are noisy systems
+2. wildfires burning in defoliated areas are a rare event
+- We are trying to detect a small signal (specific change in fuel), in a large and noisy system.
+:::
+
+:::{.column width="40%"}
+![Fire Potential in SBW killed forests. Stocks, 1987](content/Stocks1987.png)
+:::
+
+::::
+
+:::{.notes}
+- Previous studies have demonstrated that legacies of SBW outbreaks increase wildfire behavior
+- Others have found no effect
+- This is a classic figure outlined by Stocks in 1987 which describes the fire potential in SBW killed forests. 
+- it follows time since mortality on the x and the evolution of fuels following outbreaks
+- it has been shown to increase, sometimes nothing and it is tough. (point to graph)
+- Noisy system and rare event.
+-- one potential reason for the lack of consistency in the findings is that wildfires are noisy, and we are trying to detect a small signal (specific change in fuel), in a large and noisy system.
+-therefore our approach to look at how severity is affected I tried to minimize the amount of confounding factors
+
+
+- we decided to approach this problem differently and try to reduce the uncertainty and remove noise 
+`- Time since mortality and cumulative years defoliation are...`
+
+:::
 
 ## Research Question
 
-How do the spatial legacies of spruce budworm defoliation influence wildfire burn severity and forest recovery in the boreal forest?
+How do the spatial legacies of SBW outbreaks influence wildfire burn severity and forest recovery in the boreal forest?
 
 - Is there a difference in forest recovery between 1-5 years and 6-10 years post-fire between defoliated and non-defoliated fires?
 
@@ -173,20 +203,14 @@ fig.coast( land="lightgreen",
 )
 
 pygmt.makecpt(cmap="plasma", series=[studyDF.Fire_Year.min(), studyDF.Fire_Year.max()])
-fig.plot(x=studyDF.longitude, y=studyDF.latitude, style="t0.18c", color= studyDF.Fire_Year, cmap=True)
-fig.colorbar( 
-             position = "jBL+o1c/2c+w7c/+w4c/0.5c+h",
-             box ="+gwhite+p1p",
-             frame=["af", "x+lFire Year"],
-             )
+fig.plot(x=studyDF.longitude, y=studyDF.latitude, style="t0.18c", color="red")
+#fig.colorbar( 
+#             position = "jBL+o1c/2c+w7c/+w4c/0.5c+h",
+#             box ="+gwhite+p1p",
+#             frame=["af", "x+lFire Year"],
+#             )
 
-#Create an inset map, setting the position to bottom right, and the x- and
-# y-offsets to 0.1 cm, respectively.
-# The inset map contains the Japan main land. "U54S/3c" means UTM projection
-# with a map width of 3 cm. The inset width and height are automatically
-# calculated from the specified ``region`` and ``projection`` parameters.
-# Draws a rectangular box around the inset with a fill color of "white" and
-# a pen of "1p".
+
 with fig.inset(
     region="CA",
     position="jTR+o0.1c",
@@ -194,8 +218,7 @@ with fig.inset(
     projection="M3c",
     
 ):
-    # Highlight the Japan area in "lightbrown"
-    # and draw its outline with a pen of "0.2p". #CA.ON+gred #"CA+glightbrown+p1p"
+    
     fig.coast(land="gray",
         borders=[1, 2],
         shorelines="1/thin",
@@ -203,27 +226,24 @@ with fig.inset(
         dcw=["CA.ON+gred","CA.QC+gred"],
         area_thresh=10000,
     )
-    # Plot a rectangle ("r") in the inset map to show the area of the main
-    # figure. "+s" means that the first two columns are the longitude and
-    # latitude of the bottom left corner of the rectangle, and the last two
-    # columns the longitude and latitude of the uppper right corner.
-    #rectangle = [[region[0], region[2], region[1], region[3]]]
-    #fig.plot(data=rectangle, style="r+s", pen="2p,blue")
+
 pygmt.set_display(method="external") 
 fig.show()
 
 ```
 
-![studyarea](content/study-area-v1.png)
+![Wildfires that burned in the boreal shield of Ontario and Quebec 1986-2012](content/study-area-v2.png)
 
-## Experimental approach
+## Experimental Approach
 :::: {.columns}
 
 ::: {.column width="60%"}
--   matched pairs design
--   why did we do this? control for noise
--   
-
+*   matched pairs design
+1. identified fires that had areas affected and not affected by SBW outbreaks
+2. split fires in two - defoliated and non-defoliated
+3. calculated burn severity using the Relativised Burn Ratio in Google Earth Engine (GEE)
+4. calculated forest recovery in each area using a spectral measure of forest recovery (NBR)
+5. Modeled the relationships between SBW legacies, burn severity and recovery using a piecewise structural equation model (pSEM)
 :::
 
 ::: {.column width="40%"}
@@ -235,14 +255,13 @@ fig.show()
 
 
 ::: {.notes}
-One of the difficulties in modelling the effect of SBW is quantifying the severity of sbw defoliation.
-Two key characteristics of SBW defoliation have been identified in the literature:
-Time since defoliation and cumulative defoliation
-Studies normally model these and individual predictors or in separate models.
-It is possible that the lack of evidence for SBW-Fire interactions is due to models ability to capture defoliation severity.
-I proposed a novel method to quantifying defoliation severity using latent composite variables in SEMs
-Latent composite variables are used to represent a property (in this case defoliation severity) that arise from the collective influence of certain predictors. 
-The error terms indicate that we do not include all the possible predictors because the condition of defoliation severity may also include unobservables. 
+We gathered remotely sensed burn severity and nbr data using Google Earth Engine (GEE). 
+We initially gathered wildfire severity maps for each fire that burned in our study area based on the wildfire database for Ontario (77). 
+Burn severity was measured using the relativized burn ratio (RBR), a Landsat-based fire severity metric that represents the change in forest cover following a fire relative to the amount of pre-fire vegetative cover rather than the absolute change. 
+RBR maps were calculated using mean composited multispectral imagery from Landsat-TM, -ETM and -OLI, following the hybrid method developed for the boreal forest region by Holsinger, Parks (35) that uses MODIS imagery to determine start and end date of fires. 
+
+**We decided to model these relationships using a SEM because we hypothesize that defoliation will indirectly influence forest recovery through changes in burn severity**
+
 :::
 
 ## Hypothesized causal network
@@ -252,23 +271,29 @@ DiagrammeR::grViz("content/chapter3-dag.gv")
 ```
 
 ::: {.notes}
-We used piecewise structural equation models too explore the causal pathways between forest structure, snow melt and remotely-sensed burn severity. We fit our pSEM using linear mixed effects models controlling for size class and fire year. We know about these relationships but we don’t know we don’t know the weights, therefore this approach allows us to compare the weights of the causal pathways. (standardized regression coefficients)
+**We used piecewise structural equation models too explore the causal pathways between defoliation, remotely-sensed burn severity and spectral measures of forest recovery. We fit our pSEM using linear mixed effects models controlling for fire id, province and fire year. this approach allows us to compare the strengths of the causal pathways between different network topologies and allow us to tease apart the relative contributions of a single driver when the mediation effects of others are taken into effect.**
 
-When studying complex interactions, it is difficult to isolate the individual effects of different pathways. However new developments in structural equation modelling allow us to tease apart the relative contributions of a single driver when the mediation effects of others are taken into effect. 
+**Defoliation here, is captured by time since disturbance and cumulative years of defoliation.**
+**- time since defoliation is...**
+**- cumulative years of defoliation is...**
+
+**ISI is numeric rating of the expected rate of fire spread. It is based on wind speed and FFMC.** - higher ISI, more likelihood of canopy ignition and more severe fires
+**BUI is a numeric rating of the total amount of fuel available for combustion. DMC and DC** 
+- higher bui, more fuel to burn, higher severity
+
+
 SEM allow us to examine causal relationships among variables, while simultaneously accounting for measurement error and condition effects based on other covariates.
+One of the difficulties in modelling the effect of SBW is quantifying the severity of sbw defoliation.
+Two key characteristics of SBW defoliation have been identified in the literature:
+Time since defoliation and cumulative defoliation
+Studies normally model these and individual predictors or in separate models.
+It is possible that the lack of evidence for SBW-Fire interactions is due to models ability to capture defoliation severity.
+I proposed a novel method to quantifying defoliation severity using latent composite variables in SEMs
+Latent composite variables are used to represent a property (in this case defoliation severity) that arise from the collective influence of certain predictors. 
+The error terms indicate that we do not include all the possible predictors because the condition of defoliation severity may also include unobservables. 
 
 :::
 
-## Data
-
-
-::: {.notes}
-We gathered remotely sensed snow cover and burn severity using Google Earth Engine (GEE). 
-We initially gathered wildfire severity maps for each fire that burned in our study area based on the wildfire database for Ontario (77). 
-Burn severity was measured using the relativized burn ratio (RBR), a Landsat-based fire severity metric that represents the change in forest cover following a fire relative to the amount of pre-fire vegetative cover rather than the absolute change. 
-RBR maps were calculated using mean composited multispectral imagery from Landsat-TM, -ETM and -OLI, following the hybrid method developed for the boreal forest region by Holsinger, Parks (35) that uses MODIS imagery to determine start and end date of fires. 
-
-:::
 
 ## Median Severity Increases with Time Since Defoliation
 
@@ -296,7 +321,7 @@ med
 
 
 
-## Preliminary Results
+## Results
 
 ```{r}
 #| message: false
@@ -437,6 +462,8 @@ gsem2 <- graph2|>
   render_graph(layout = "tree")
 
 
+# calculate indirect effects
+ind <- (as.numeric(coefs(sem1[[1]])[3,8]) * as.numeric(coefs(sem1[[2]])[1,8]))
 
 
 ```
@@ -455,6 +482,13 @@ gsem2
 
 :::
 
+:::{.notes}
+Across both models 
+- With every unit increase in ISI, we found an increase in BS by 
+- With every one unit increase in the interaction between tsd x cyd, we see an increase in median severity
+- However, as median severity increases, slope increases only in the first 5 years.
+
+:::
 ## Takeaways
 
 1. Median burn severity had a significant impact on recovery for the first 5 years following fire but not for the second 5 years. 
@@ -462,7 +496,29 @@ gsem2
 3. Defoliation indirectly effects slope of recovery for the first 5 years post fire through increases in median burn severity.
 
 
-## acknowledgments
+:::{.notes}
+
+recovery is different from first five years to second five years
+
+:::
+
+## Next Steps
+
+- Test different measures of burn severity 
+
+1. extreme severity 
+2. variation in burn severity
+
+```{r}
+#| include: false
+
+# show differences in the variation in burn severity between each measure
+
+
+```
+
+
+## Acknowledgments
 :::: {.columns}
 
 ::: {.column width="40%"}

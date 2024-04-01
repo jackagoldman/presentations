@@ -1,31 +1,28 @@
 // step 1 dag
 digraph "chapter3-step1-dag" {
   bgcolor="transparent"
-	T [label="Time Since Defoliation" shape=rect ]
-	Y [label="Number of Years Defoliated" shape=rect ]
-	C [label="Defoliation Intensity" shape=doubleoctagon]
+	TY [label="Time Since Defoliation x Number of Years Defoliated" shape=rect ]
 	B [label="Burn Severity" color=red shape=rect]
 	R [label="Forest Recovery" color=red shape=ellipse]
-	DC [label = "Drought Code" shape=rect]
-	FC [label = "Fine Fuel Moisture Code" shape=rect]
-	DMC [label = "Duff Moisture Code" shape=rect]
+	BUI [label = "Build Up Index" shape=rect]
+	ISI [label = "Initial Spread Index" shape=rect]
+	MT[label = "Mean Temperature" shape=rect]
+	PPT [label = "Total Precipitation" shape=rect]
+
 	
-subgraph clusterSI{
-  T -> C
-	Y -> C
-	C -> B
-	style=invis;
-}
+
 subgraph clusterBS{
   rankdir="TB"
-  DC -> B;
-	FC -> B;
-	DMC -> B;
+  TY -> B
+  ISI -> B;
+	BUI -> B;
 	style=invis;
 	
 }
 subgraph clusterRecov{
   B -> R
+  MT -> R
+  PPT -> R
   style=invis;
 }
 
