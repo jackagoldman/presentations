@@ -47,6 +47,7 @@ library(emmeans)
 library(lme4)
 library(optimx)
 library(lmerTest)
+library(ggridges)
 #library(patchwork)
 #library(shadowtext)
 
@@ -87,6 +88,12 @@ library(lmerTest)
 
 ::::
 
+:::{.notes}
+- lepidopteran defoliator
+- they feed on current-year needles, partially or completely consuming them and, if large numbers of larvae are present, previous-year needles may also be affected
+A single year of defoliation generally has little impact on the tree. However, it does cause weakening of the tree, making it more susceptible to attacks by other insects. Defoliation over a few consecutive years causes tree growth loss. However, if defoliation of current- and previous-year shoots continues uninterrupted over several years, some trees will die, while others will continue to gradually decline for several years, even after the end of the infestation. This is the case with fir, the species most vulnerable to spruce budworm attacks, which dies after four consecutive years of severe defoliation.
+
+:::
 ## Wildfire behavior and post-fire recovery
 
 :::: {.columns}
@@ -109,7 +116,12 @@ library(lmerTest)
 
 ::: {.notes}
 What is the fire behavior triangle?
+Within a single fire, wildfire behavior can be explained by 3 factors: fuels weather and topography
+- Topography alters wildfire behaviour by.
+-Weather, such as relative humidity, wind speed and temperature
+- Forest fuels are all the burnable materials in the forest, from underground to treetops. It is helpful to think of forest fuels in layers.
 - a particular part of fuels is insect outbreaks 
+- Insect defoliators change how fuel is organized in the boreal forest, leads to a lot more fien fuel buildup and contributes to ladder fuels, which connect the forest floor to the canopy and help promote high severity crown fires.
 
 
 
@@ -504,16 +516,24 @@ recovery is different from first five years to second five years
 
 ## Next Steps
 
-- Test different measures of burn severity 
+Test different measures of burn severity 
 
 1. extreme severity 
 2. variation in burn severity
 
-```{r}
-#| include: false
+```{r dev.args=list(bg="transparent")}
+#| 
 
-# show differences in the variation in burn severity between each measure
 
+df |> 
+  select(c(rbr_median, rbr_extreme)) |> 
+  rename(`Median Severity` = rbr_median) |> 
+  rename(`Extreme Severity` = rbr_extreme) |> 
+  pivot_longer(!fire_name, names_to = "Measure", values_to = "Relativized Burn Ratio (RBR)") |> 
+  ggplot(aes(x = `Relativized Burn Ratio (RBR)`, y = Measure, fill = Measure)) +
+  geom_density_ridges() +
+  theme_ridges() + 
+  theme(legend.position = "bottom")
 
 ```
 
