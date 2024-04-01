@@ -341,7 +341,7 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
             <sup>1</sup>Institute of Forestry and Conservation, University of Toronto
           </p>
         <p class="quarto-title-affiliation">
-            <sup>2</sup>Department of Ecology and Evolutionary Biology, University of toronto
+            <sup>2</sup>Department of Ecology and Evolutionary Biology, University of Toronto
           </p>
     </div>
 </div>
@@ -360,8 +360,25 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 </ul>
 </div><div class="column" style="width:40%;">
 <video id="video_shortcode_videojs_video1" width="500" height="350" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="content/patrick_embed_video_NOSOUND.mp4"></video>
+<p>Timelapse of 2006-2020 SBW Outbreak</p>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>lepidopteran defoliator</li>
+<li>they feed on current-year needles, partially or completely consuming them and, if large numbers of larvae are present, previous-year needles may also be affected A single year of defoliation generally has little impact on the tree. However, it does cause weakening of the tree, making it more susceptible to attacks by other insects. Defoliation over a few consecutive years causes tree growth loss. However, if defoliation of current- and previous-year shoots continues uninterrupted over several years, some trees will die, while others will continue to gradually decline for several years, even after the end of the infestation. This is the case with fir, the species most vulnerable to spruce budworm attacks, which dies after four consecutive years of severe defoliation.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="wildfire-behavior-and-post-fire-recovery" class="slide level2">
 <h2>Wildfire behavior and post-fire recovery</h2>
@@ -378,7 +395,7 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 </div>
 </div>
 <aside class="notes">
-<p>What is the fire behavior triangle? - a particular part of fuels is insect outbreaks</p>
+<p>What is the fire behavior triangle? Within a single fire, wildfire behavior can be explained by 3 factors: fuels weather and topography - Topography alters wildfire behaviour by. -Weather, such as relative humidity, wind speed and temperature - Forest fuels are all the burnable materials in the forest, from underground to treetops. It is helpful to think of forest fuels in layers. - a particular part of fuels is insect outbreaks - Insect defoliators change how fuel is organized in the boreal forest, leads to a lot more fien fuel buildup and contributes to ladder fuels, which connect the forest floor to the canopy and help promote high severity crown fires.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -391,8 +408,8 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
           display:block!important;
       }</style></aside>
 </section>
-<section id="current-understanding-of-sbw-x-wildfire-behavior-is-unclear" class="slide level2">
-<h2>Current understanding of SBW x Wildfire behavior is unclear</h2>
+<section id="what-we-know-about-sbw-x-wildfire" class="slide level2">
+<h2>What We Know About SBW x Wildfire</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
@@ -404,7 +421,7 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 <li class="fragment">wildfires burning in defoliated areas are a rare event</li>
 </ol>
 <ul>
-<li class="fragment">We are trying to detect a small signal (specific change in fuel), in a large and noisy system.</li>
+<li class="fragment">The goal is to detect a small signal (specific change in fuel), in a large and noisy system.</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
@@ -487,8 +504,8 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 <h2>Hypothesized causal network</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-5bf0d27f75e3431f0b16" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-5bf0d27f75e3431f0b16">{"x":{"diagram":"// step 1 dag\ndigraph \"chapter3-step1-dag\" {\n  bgcolor=\"transparent\"\n\tTY [label=\"Time Since Defoliation x Number of Years Defoliated\" shape=rect ]\n\tB [label=\"Burn Severity\" color=red shape=rect]\n\tR [label=\"Forest Recovery\" color=red shape=ellipse]\n\tBUI [label = \"Build Up Index\" shape=rect]\n\tISI [label = \"Initial Spread Index\" shape=rect]\n\tMT[label = \"Mean Temperature\" shape=rect]\n\tPPT [label = \"Total Precipitation\" shape=rect]\n\n\t\n\nsubgraph clusterBS{\n  rankdir=\"TB\"\n  TY -> B\n  ISI -> B;\n\tBUI -> B;\n\tstyle=invis;\n\t\n}\nsubgraph clusterRecov{\n  B -> R\n  MT -> R\n  PPT -> R\n  style=invis;\n}\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5a31bdd718ea7c61d4da" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5a31bdd718ea7c61d4da">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"#fcfbf9\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"8\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"Recovery\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"Initial Spread\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"Build Up\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"time since \nx\n cumulative years\ndefoliation\", shape = \"rectangle\", color = \"green\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n\"1\"->\"2\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", color = \"grey\", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <aside class="notes">
@@ -514,20 +531,10 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
 <img data-src="goldman-jack-iale-talk-2024_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section id="results" class="slide level2">
 <h2>Results</h2>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-1bb190ec6827597ded8f" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-1bb190ec6827597ded8f">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"#fcfbf9\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"1-5 Slope\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"ISI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"BUI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"tsd x cyd\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.207 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.275 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.246 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-17459e0a0397fb009491" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-17459e0a0397fb009491">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"#fcfbf9\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"6-10 Slope\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"ISI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"BUI\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"tsd x cyd\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"black\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"dashed\", color = \"grey\", label = \" 0.057 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.403 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.136 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ee9afe09b5a0a059a14d" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-ee9afe09b5a0a059a14d">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"#fcfbf9\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"8\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"1-5 Recovery\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"Initial Spread\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"Build Up\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"time since \nx\n cumulative years\ndefoliation\", shape = \"rectangle\", color = \"green\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.207 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.275 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" -0.246 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <aside class="notes">
@@ -543,6 +550,15 @@ Jack A. Goldman<sup>1</sup>,Marie-Josée Fortin<sup>2</sup>,Patrick M.A.&nbsp;Ja
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="results-1" class="slide level2">
+<h2>Results</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item" id="htmlwidget-be338bd6e838052f59a8" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-be338bd6e838052f59a8">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"#fcfbf9\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"8\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Median Severity\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,2!\"] \n  \"2\" [label = \"6-10 Recovery\", shape = \"rectangle\", color = \"red\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,1!\"] \n  \"3\" [label = \"Initial Spread\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"0,3!\"] \n  \"4\" [label = \"Build Up\n Index\", shape = \"rectangle\", color = \"orange\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"1,3!\"] \n  \"5\" [label = \"time since \nx\n cumulative years\ndefoliation\", shape = \"rectangle\", color = \"green\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"2,3!\"] \n  \"6\" [label = \"mean\ntemperature\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"3,3!\"] \n  \"7\" [label = \"total\nprecipitation\", shape = \"rectangle\", color = \"blue\", fixedsize = \"FALSE\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\", pos = \"4,3!\"] \n\"3\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.464 \", dir = \"forward\"] \n\"4\"->\"1\" [style = \"solid\", color = \"grey\", label = \" -0.384 \", dir = \"forward\"] \n\"5\"->\"1\" [style = \"solid\", color = \"grey\", label = \" 0.216 \", dir = \"forward\"] \n\"1\"->\"2\" [style = \"dashed\", color = \"grey\", label = \" 0.057 \", dir = \"forward\"] \n\"6\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.403 \", dir = \"forward\"] \n\"7\"->\"2\" [style = \"solid\", color = \"grey\", label = \" 0.136 \", dir = \"forward\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="takeaways" class="slide level2">
 <h2>Takeaways</h2>
