@@ -32,13 +32,7 @@ knitr::opts_knit$set(root.dir = '~/git/presentations/iale-2024')
 library(nlme)
 library(ggplot2)
 library(tidyverse)
-df <- read.csv("data/on-qc-full-dataset_v1.csv")
 
-graphRaw <- readRDS("~/git/presentations/iale-2024/content/dag-node-df-v1.RDS")
-
-df <- df |> 
-  dplyr::group_by(fire_name) |> 
-  dplyr::mutate(id_nest =cur_group_id()) 
 
 # for interactive plots
 library(DiagrammeR)
@@ -65,6 +59,19 @@ library(ggridges)
 #theme_set(theme_minimal(base_family = "Jost"))
 
 
+```
+
+
+```{r data}
+#| include: false
+
+df <- read.csv("~/git/presentations/iale-2024/data/on-qc-full-dataset_v1.csv")
+
+graphRaw <- readRDS("~/git/presentations/iale-2024/content/dag-node-df-v1.RDS")
+
+df <- df |> 
+  dplyr::group_by(fire_name) |> 
+  dplyr::mutate(id_nest = dplyr::cur_group_id()) 
 ```
 
 ## Background
@@ -143,7 +150,8 @@ Within a single fire, wildfire behavior can be explained by 3 factors: fuels wea
 :::
 
 :::{.column width="40%"}
-![Fire Potential in SBW killed forests. Stocks, 1987](content/Stocks1987.png)
+![Fire Potential in SBW killed forests. Stocks, 1987](content/Stocks1987.png){.nostretch fig-align="center" width="800px"}
+
 :::
 
 ::::
@@ -218,7 +226,7 @@ fig.coast( land="lightgreen",
 )
 
 
-#mog = [2012, 1988, 1987, 1995, 1996, 1998, 1999, 2000, 2002, 1997, 2005, 2006, 2007, 2010, 1986, 1990, 1991]
+
 
 pygmt.makecpt(cmap="viridis", series=[studyDF.Fire_Year.min(), studyDF.Fire_Year.max()])
 fig.plot(x=studyDF.longitude, y=studyDF.latitude, fill=studyDF.Fire_Year, cmap=True, style="t0.18c")
@@ -284,7 +292,7 @@ RBR maps were calculated using mean composited multispectral imagery from Landsa
 
 ## Hypothesized causal network
 
-```{r dev.args = list(bg = 'transparent')}
+```{r}
 
 
 graphRaw$nodes_df[[2,3]] <- 'Recovery'
@@ -589,7 +597,7 @@ ind2 <- (as.numeric(coefs(sem2[[1]])[3,8]) * as.numeric(coefs(sem2[[2]])[1,8]))
 
 
 
-```{r, dev = "png", dev.args=list(bg="transparent")}
+```{r}
 gsem1
 ```
 
@@ -634,7 +642,7 @@ Test different measures of burn severity
 1. extreme severity 
 2. variation in burn severity
 
-```{r dev.args=list(bg="transparent")}
+```{r dev.args=list(bg="#fcfbf9")}
 #| 
 
 
@@ -646,8 +654,10 @@ df |>
   ggplot(aes(x = `Relativized Burn Ratio (RBR)`, y = Measure, fill = Measure)) +
   geom_density_ridges() +
   theme_ridges() + 
-  theme(legend.position = "bottom")
-
+  theme(axis.title.y = element_text(angle = 90, hjust = 0.4)) +
+  theme(axis.title.x = element_text(angle = 0, hjust = 0.5)) +
+  theme(legend.position = "none") +
+  theme(panel.background = element_rect(fill ="#fcfbf9", colour = "#fcfbf9" ))
 ```
 
 
